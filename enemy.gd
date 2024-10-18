@@ -1,26 +1,28 @@
-extends CharacterBody2D
+extends BaseCharacter
 
 signal enemy_destroyed()
-signal character_moved(new_tile_location: Vector2i)
 
 var hit_splat_scene = preload("res://hit_splat.tscn")
-var tile_location = Vector2i(1, 0)
-var tile_size = 16
 const ticks_between_wanders = 10
 var wander_counter = 0
 
-@export var health = 10
-@export var max_health = 10
+@onready var progress_bar = $EnemyUIElements/ProgressBar
+
+@export var health: int = 10
+@export var max_health: int = 10
 
 func _ready():
-	$EnemyUIElements/ProgressBar.value = health
-	$EnemyUIElements/ProgressBar.max_value = max_health
+	super._ready()
+	progress_bar.value = health
+	progress_bar.max_value = max_health
+	self.tile_location = Vector2i(1, 0)
 
 
-func handle_incoming_attack(damage: int):
-	print("Enemy received attack. Damage: ", damage)
+func handle_incoming_attack(damage: int, attackerId: String):
+	print("Enemy received attack from attacker ", attackerId, ". Damage: ", damage)
 	_handle_incoming_damage(damage)
 	_display_damage(damage)
+	set_attack_target(attackerId)
 	if (self.health <= 0):
 		_handle_destroyed()
 
@@ -46,7 +48,7 @@ func _display_damage(damage: int):
 
 func _on_game_tick():
 	_process_wandering_tick()
-	$CharacterController.process_game_tick()
+	process_game_tick()
 
 func _process_wandering_tick():
 	wander_counter = ((wander_counter + 1) % ticks_between_wanders)
@@ -57,18 +59,8 @@ func _process_wandering_tick():
 			randi_range(0, 10)
 		)
 		print("[Enemy] Setting new target position to ", next_target_position)
-		$CharacterController.set_target_position(next_target_position)
+		set_target_position(next_target_position)
 
-
-func _set_tile_location(new_tile_location):
-	self.tile_location = new_tile_location
-	var next_position = Vector2i(
-		tile_size * new_tile_location.x + (tile_size / 2),
-		tile_size * new_tile_location.y + (tile_size / 2)
-	)
-	print("[Enemy] Next position: ", next_position)
-	self.position = next_position
-	character_moved.emit(self.tile_location)
 
 func _on_character_controller_request_move(new_position):
-	_set_tile_location(new_position)
+	set_tile_location(new_position)

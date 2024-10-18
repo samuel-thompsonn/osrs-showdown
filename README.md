@@ -20,7 +20,6 @@ It looks like I've got something sort of like a full game loop. What can I work 
 
 - Bug: when you first open up the action menu, it disables the UI elements
 	until you open another
-- Have the player follow around enemies that it's attacking
 - Have enemies attack you back, or have them attack in the first place
 - Have multiple enemies that one can attack
 - Bug: Damage indicator for the enemy sprite shows up in the wrong position
@@ -36,6 +35,7 @@ DONE list
 - DONE--Bug: The 'Move here' option doesn't work straight up
 - DONE--Add sound effects
 - DONE--Bug: Game tick toggle doesn't carry over to next level
+- DONE--Have the player follow around enemies that it's attacking
 
 Among those, the most exciting is probably sound effects--the music might get really repetitive though so I'll wait on that or turn it off during dev.
 

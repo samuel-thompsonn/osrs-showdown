@@ -58,7 +58,7 @@ func _on_character_attack(target):
 		if (not _tiles_adjacent($EnemyInstance.tile_location, $Character.current_tile)):
 			print("Character attempted to attack Chaos Knight but was too far away. Enemy tile: ", $EnemyInstance.tile_location, " Character tile: ", $Character.current_tile)
 			return
-		$EnemyInstance.handle_incoming_attack(2)
+		$EnemyInstance.handle_incoming_attack(2, 'player')
 
 
 func _tiles_adjacent(first_tile: Vector2, second_tile: Vector2):

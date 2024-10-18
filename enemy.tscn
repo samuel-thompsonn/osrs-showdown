@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cecrgycsow8pb"]
+[gd_scene load_steps=6 format=3 uid="uid://cecrgycsow8pb"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_8i1bi"]
 [ext_resource type="Texture2D" uid="uid://clvbgncxhs57r" path="res://sprites/enemy_idle0.png" id="1_bs5hl"]
 [ext_resource type="AudioStream" uid="uid://dubufgxxrccdk" path="res://sounds/attack.wav" id="3_71tht"]
-[ext_resource type="PackedScene" uid="uid://4bomx2w7enft" path="res://character_controller.tscn" id="4_yo51l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtqp2"]
 size = Vector2(16, 16)
@@ -47,7 +46,3 @@ show_percentage = false
 
 [node name="EnemyAudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_71tht")
-
-[node name="CharacterController" parent="." instance=ExtResource("4_yo51l")]
-
-[connection signal="request_move" from="CharacterController" to="." method="_on_character_controller_request_move"]
