@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
 signal enemy_destroyed()
+signal character_moved(new_tile_location: Vector2i)
 
 var hit_splat_scene = preload("res://hit_splat.tscn")
-var tile_location = Vector2(1, 0)
+var tile_location = Vector2i(1, 0)
 var tile_size = 16
 const ticks_between_wanders = 10
 var wander_counter = 0
@@ -58,11 +59,16 @@ func _process_wandering_tick():
 		print("[Enemy] Setting new target position to ", next_target_position)
 		$CharacterController.set_target_position(next_target_position)
 
-func _on_character_controller_request_move(new_position):
-	self.tile_location = new_position
+
+func _set_tile_location(new_tile_location):
+	self.tile_location = new_tile_location
 	var next_position = Vector2i(
-		tile_size * new_position.x + (tile_size / 2),
-		tile_size * new_position.y + (tile_size / 2)
+		tile_size * new_tile_location.x + (tile_size / 2),
+		tile_size * new_tile_location.y + (tile_size / 2)
 	)
 	print("[Enemy] Next position: ", next_position)
 	self.position = next_position
+	character_moved.emit(self.tile_location)
+
+func _on_character_controller_request_move(new_position):
+	_set_tile_location(new_position)

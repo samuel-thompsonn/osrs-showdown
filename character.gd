@@ -39,14 +39,7 @@ func _set_target_position(new_target_position):
 func _on_set_attack_target(attack_target, attack_target_position):
 	print("Attacking the chaos knight!")
 	self.attack_target = 1
-	var path_to_attack_target = _astar.get_point_path(current_tile, attack_target_position)
-	print("Path to attack target: ", path_to_attack_target)
-	if path_to_attack_target.size() == 0:
-		return
-	elif path_to_attack_target.size() == 1:
-		_set_target_position(path_to_attack_target[0])
-	else:
-		_set_target_position(path_to_attack_target[path_to_attack_target.size() - 2])
+	_move_to_attack_target(attack_target_position)
 
 
 func _set_position(target_position):
@@ -90,3 +83,19 @@ func _on_animated_sprite_2d_animation_finished():
 		print("Current animation: ", $AnimatedSprite2D.animation)
 		$AnimatedSprite2D.play("idle")
 		print("Current animation: ", $AnimatedSprite2D.animation)
+
+
+func _move_to_attack_target(attack_target_position):
+	var path_to_attack_target = _astar.get_point_path(current_tile, attack_target_position)
+	print("Path to attack target: ", path_to_attack_target)
+	if path_to_attack_target.size() == 0:
+		return
+	elif path_to_attack_target.size() == 1:
+		_set_target_position(path_to_attack_target[0])
+	else:
+		_set_target_position(path_to_attack_target[path_to_attack_target.size() - 2])
+
+
+func on_enemy_moved(new_tile_location):
+	if self.attack_target != null:
+		_move_to_attack_target(new_tile_location)
