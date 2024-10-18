@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://rwr4sno4js5l"]
+
+[ext_resource type="PackedScene" uid="uid://bqo2p6rl4l7j0" path="res://world.tscn" id="1_58txe"]
+[ext_resource type="Script" path="res://main.gd" id="1_tsckn"]
+[ext_resource type="Script" path="res://UserInterfaceLayer.gd" id="3_swg0n"]
+[ext_resource type="Script" path="res://GameTickTimer.gd" id="4_6hh6m"]
+[ext_resource type="AudioStream" uid="uid://bodqwvsc6u63x" path="res://sounds/win.mp3" id="5_f62mj"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_tsckn")
+
+[node name="World" parent="." instance=ExtResource("1_58txe")]
+
+[node name="UserInterfaceLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_swg0n")
+
+[node name="GameTickButton" type="Button" parent="UserInterfaceLayer"]
+offset_left = 836.0
+offset_top = 5.0
+offset_right = 945.0
+offset_bottom = 39.0
+text = "Do game tick"
+
+[node name="AutoTickToggle" type="CheckButton" parent="UserInterfaceLayer"]
+offset_left = 836.0
+offset_top = 39.0
+offset_right = 880.0
+offset_bottom = 63.0
+text = "Auto Tick"
+
+[node name="GameTickTimer" type="Timer" parent="UserInterfaceLayer"]
+wait_time = 0.5
+autostart = true
+script = ExtResource("4_6hh6m")
+
+[node name="Message" type="Label" parent="UserInterfaceLayer"]
+visible = false
+offset_left = 548.0
+offset_top = 341.0
+offset_right = 633.0
+offset_bottom = 364.0
+text = "You win!"
+
+[node name="PlayAgainButton" type="Button" parent="UserInterfaceLayer"]
+visible = false
+offset_left = 543.0
+offset_top = 376.0
+offset_right = 630.0
+offset_bottom = 407.0
+text = "Play again"
+
+[node name="WinAudioPlayer" type="AudioStreamPlayer2D" parent="UserInterfaceLayer"]
+stream = ExtResource("5_f62mj")
+
+[connection signal="battle_complete" from="World" to="UserInterfaceLayer" method="_on_battle_complete"]
+[connection signal="show_world_actions" from="World" to="UserInterfaceLayer" method="_on_show_actions"]
+[connection signal="pressed" from="UserInterfaceLayer/GameTickButton" to="." method="_on_game_tick_button_pressed"]
+[connection signal="toggled" from="UserInterfaceLayer/AutoTickToggle" to="UserInterfaceLayer/GameTickTimer" method="_on_auto_tick_toggle_toggled"]
+[connection signal="timeout" from="UserInterfaceLayer/GameTickTimer" to="." method="_on_game_tick_timer_timeout"]
+[connection signal="timeout" from="UserInterfaceLayer/GameTickTimer" to="UserInterfaceLayer/GameTickTimer" method="_on_timeout"]
+[connection signal="pressed" from="UserInterfaceLayer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]

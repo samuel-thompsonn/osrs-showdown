@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjpjcuf1jvul6"]
+
+[ext_resource type="Texture2D" uid="uid://b1irrpmv37i8d" path="res://sprites/idle0.png" id="1_bovkd"]
+[ext_resource type="Script" path="res://character.gd" id="1_rm65w"]
+[ext_resource type="Texture2D" uid="uid://cldtuinl7trbf" path="res://sprites/attack0.png" id="3_wx7ct"]
+[ext_resource type="Texture2D" uid="uid://d24nacwp05or4" path="res://sprites/idle1.png" id="3_xb2qy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xb4qs"]
+size = Vector2(16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gc8h6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_wx7ct")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bovkd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xb2qy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_rm65w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xb4qs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_gc8h6")
+animation = &"attack"
+autoplay = "idle"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
