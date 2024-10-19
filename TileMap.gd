@@ -13,6 +13,8 @@ signal tile_options_requested(target_position)
 var highlighted_cell
 var _astar = AStarGrid2D.new()
 
+var target_position_cell
+
 const NO_CELL = -1
 const GRID_WIDTH = 10
 const GRID_HEIGHT = 10
@@ -30,14 +32,14 @@ func _init():
 func _input(event):
 	var world_mouse_position = get_global_mouse_position()
 	if not game_world_rect.has_point(world_mouse_position):
-		if highlighted_cell:
+		if highlighted_cell != null:
 			set_cell(highlight_layer, highlighted_cell, NO_CELL)
 			highlighted_cell = null
 		return
 	var tile_position = local_to_map(world_mouse_position)
 	if event is InputEventMouseMotion:
-		if highlighted_cell:
-			# Clear previous highlight
+		if highlighted_cell != null:
+		 	# Clear previous highlight
 			set_cell(highlight_layer, highlighted_cell, NO_CELL)
 		highlighted_cell = tile_position
 		set_cell(highlight_layer, highlighted_cell, highlight_atlas_id, highlight_tile_coords)
@@ -51,3 +53,10 @@ func _input(event):
 
 func _on_game_tick():
 	print('game ticked')
+
+
+func _on_character_show_target_position(new_target_position):
+	if target_position_cell != null:
+		set_cell(2, target_position_cell, -1)
+	target_position_cell = new_target_position
+	set_cell(2, new_target_position, 0, Vector2(7, 9))

@@ -908,6 +908,7 @@ position = Vector2(24, 8)
 [connection signal="game_tick" from="." to="Character" method="_on_game_tick"]
 [connection signal="game_tick" from="." to="EnemyInstance" method="_on_game_tick"]
 [connection signal="attack" from="Character" to="." method="_on_character_attack"]
+[connection signal="show_target_position" from="Character" to="TileMap" method="_on_character_show_target_position"]
 [connection signal="tile_clicked" from="TileMap" to="Character" method="_on_tile_map_tile_clicked"]
 [connection signal="tile_options_requested" from="TileMap" to="." method="_on_tile_options_requested"]
 [connection signal="attack" from="EnemyInstance" to="." method="_on_enemy_instance_attack"]

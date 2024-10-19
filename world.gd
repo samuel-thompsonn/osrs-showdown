@@ -36,7 +36,7 @@ func _new_action_menu_item(label: String, type: String, callback: Callable = fun
 
 func _on_move_requested(target_tile: Vector2i):
 	print("World is reacting to move to ", target_tile)
-	$Character._set_target_position(target_tile)
+	$Character.set_target_position(target_tile)
 
 func _on_attack_requested(attack_tile_position):
 	print("Attack requested to world")
@@ -55,8 +55,8 @@ func _on_character_attack(target):
 	# For now, assume the target is the one EnemyInstance
 	# TODO: Check if the player is in a position to attack or not
 	if ($EnemyInstance):
-		if (not _tiles_adjacent($EnemyInstance.tile_location, $Character.current_tile)):
-			print("Character attempted to attack Chaos Knight but was too far away. Enemy tile: ", $EnemyInstance.tile_location, " Character tile: ", $Character.current_tile)
+		if (not _tiles_adjacent($EnemyInstance.tile_location, $Character.tile_location)):
+			print("Character attempted to attack Chaos Knight but was too far away. Enemy tile: ", $EnemyInstance.tile_location, " Character tile: ", $Character.tile_location)
 			return
 		$EnemyInstance.handle_incoming_attack(2, 'player')
 
