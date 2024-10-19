@@ -60,7 +60,3 @@ func _process_wandering_tick():
 		)
 		print("[Enemy] Setting new target position to ", next_target_position)
 		set_target_position(next_target_position)
-
-
-func _on_character_controller_request_move(new_position):
-	set_tile_location(new_position)
