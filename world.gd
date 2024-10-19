@@ -68,3 +68,8 @@ func _tiles_adjacent(first_tile: Vector2, second_tile: Vector2):
 func _on_enemy_destroyed():
 	battle_complete.emit()
 	self.terminated = true
+
+
+func _on_enemy_instance_attack(target):
+	if target == 'player':
+		$Character.handle_incoming_attack(2, 'Chaos knight')

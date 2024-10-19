@@ -21,6 +21,7 @@ It looks like I've got something sort of like a full game loop. What can I work 
 - Bug: when you first open up the action menu, it disables the UI elements
 	until you open another
 - Have enemies attack you back, or have them attack in the first place
+- Have the base_character script control the commonalitites between enemies and the player (most things except controls)
 - Have multiple enemies that one can attack
 - Bug: Damage indicator for the enemy sprite shows up in the wrong position
 - Bug: Hovering over tile 0,0 changes it permanently.

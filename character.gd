@@ -99,3 +99,8 @@ func _move_to_attack_target(attack_target_position):
 func on_enemy_moved(new_tile_location):
 	if self.attack_target != null:
 		_move_to_attack_target(new_tile_location)
+
+
+func handle_incoming_attack(damage: int, attackerId: String):
+	print("[Player] character is being attacked for ", damage, " damage by ", attackerId)
+	
